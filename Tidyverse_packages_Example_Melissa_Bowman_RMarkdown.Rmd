@@ -1,3 +1,13 @@
+
+---
+title: "Tidyverse Extend: Melissa Bowman"
+author: "Bridget Boakye"
+date: "2022-11-13"
+output: html_document
+---
+
+#Intro: For this assignment, I chose to update the code of my classmate’s Melissa's tidyverse example, by extending her example with additional annotated code that focused on cleaning 2 specific columns in her dataframe, df_subset_bind. These 2 columns, Race.2 and Race.3, were primarily filled with double quotes and were not providing using information in their current context.See extended code below original work done by Melissa. 
+
 ---
 title: "Tidyverse"
 author: "Melissa Bowman"
@@ -65,4 +75,38 @@ df_subset_bind <- df_bind %>%
          political_party)
 ```
 
+---
 
+#Extended code 
+
+1. Inspect columns, Race.2 and Race 3. Race.2 has a few useful entries but Race.3 is merely quotes
+
+```{r inspect-columns}
+
+#df_subset_bind$Race.2
+#df_subset_bind$Race.3
+
+```
+
+2. Using dplyr's select fuctions, remove Race.3 column 
+
+```{r dplyr-remove-column}
+
+df_subset_bind <- dplyr::select(df_subset_bind, -Race.3)
+df_subset_bind
+```
+
+3. Using unite fuction in tidyverse, add Race.1 to Race.2 to capture useful information from Race.2 to Race.1 as opposed to simply dropping that column 
+
+```{r unite-race.1-race.2}
+
+df_subset_bind <- df_subset_bind %>% 
+  unite(Race, c("Race.1", "Race.2"))
+
+df_subset_bind$Race <-  
+  gsub("_", " ", df_subset_bind$Race)
+
+df_subset_bind
+```
+
+#Conclusion: using the section and unite fuctions in tidyverse, we are able to clean the Race columns in df_subset_bind to be more tidy for analysis. 
